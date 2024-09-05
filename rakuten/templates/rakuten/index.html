@@ -1,0 +1,11 @@
+{% if item_list %}
+    <ul>
+        {% for item in item_list %}
+            <li>
+                <a href="/rakuten/{{ item.manage_number }}/">{{ item.manage_number }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No item registered</p>
+{% endif %}
