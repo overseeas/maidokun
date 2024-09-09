@@ -1,0 +1,23 @@
+<h1>
+    {{item}}
+</h1>
+<table>
+    <thead>
+        <tr>
+            <th>sku管理番号</th>
+            <th>販売価格</th>
+            <th>表示価格</th>
+            <th>SKU倉庫指定</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sku in skus %}
+            <tr>
+                <td>{{ sku.sku_number }}</td>
+                <td>{{ sku.reference_price }}</td>
+                <td>{{ sku.standard_price }}</td>
+                <td>{{ sku.hidden }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

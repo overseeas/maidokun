@@ -22,5 +22,6 @@ class Sku(models.Model):
     hidden = models.IntegerField()
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
     def __str__(self):
         return self.sku_number
