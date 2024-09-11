@@ -1,6 +1,6 @@
-{% if item_list %}
+{% if items %}
     <ul>
-        {% for item in item_list %}
+        {% for item in items %}
             <li>
                 <a href="/rakuten/{{ item.manage_number }}/">{{ item.manage_number }}</a>
             </li>
@@ -12,5 +12,6 @@
 
 <form action="{% url 'rakuten:update' %}" method="post">
     {% csrf_token %}
+    {{ last_update }} <br>
     <input type="submit" value="Update">
 </form>
