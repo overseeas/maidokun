@@ -11,7 +11,7 @@ from pathlib import Path
 import environ
 import os
 from pytz import timezone
-from datetime import datetime
+from datetime import datetime, timedelta
 
 env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,7 +46,7 @@ def detail(request, manage_number):
     return render(request, "rakuten/detail.html", context)
 
 def update(request):
-    #test_date = "2024-09-16T10:43:01+09:00"
     last_update = Sku.objects.order_by("-updated_at").first().updated_at
-    recently_updated(last_update)
+    test_date = datetime.strptime("2024-09-19T15:00:41+09:00", '%Y-%m-%dT%H:%M:%S%z')
+    recently_updated.delay(last_update)
     return redirect("rakuten:index")

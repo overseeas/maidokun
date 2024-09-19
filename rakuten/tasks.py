@@ -6,8 +6,10 @@ from celery import shared_task
 
 
 @shared_task
-def recently_updated(last_update="1900-01-01T12:40:29+09:00"):
-    print("start")
+def recently_updated(last_update=False):
+    print("update start")
+    if not(last_update):
+        last_update = datetime.strptime("1999-01-01T01:00:00+09:00", '%Y-%m-%dT%H:%M:%S%z')
     items = get_updated_list(last_update)
     for item in items:
         if not(Item.objects.filter(manage_number= item["manageNumber"]).exists()):
@@ -33,12 +35,10 @@ def recently_updated(last_update="1900-01-01T12:40:29+09:00"):
                 )
             except:
                 print(sku)
-    print("end")
     return True
 
-@shared_task
+
 def get_updated_list(limit_time):
-    print("function start")
     cursorMark = ""
     next_cursorMark = "*"
     updated_items = []
@@ -54,5 +54,4 @@ def get_updated_list(limit_time):
                 return updated_items
             updated_items.append(item["item"])
         next_cursorMark = response["nextCursorMark"]
-    print("function end")
     return updated_items
