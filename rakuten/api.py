@@ -22,7 +22,7 @@ def items_search(parameters: dict):
 
     headers = add_auth_to_header(dict())
     r = requests.get(uri, headers= headers)
-    time.sleep(1)
+    time.sleep(0.2)
     if r.status_code == 200:
         return r.json()
     else:
