@@ -7,24 +7,65 @@ import datetime
 # Create your models here.
 
 class Item(models.Model):
-    #商品管理番号（商品URL）
-    manage_number = models.CharField(max_length=255)
+    #商品管理番号
+    manageNumber = models.CharField(max_length=255)
     #商品番号
-    item_number = models.CharField(max_length=255)
+    itemNumber = models.CharField(max_length=255)
     #商品名
-    title = models.TextField()
+    title = models.TextField(blank=True)
+    #キャッチコピー
+    tagline = models.TextField(blank=True)
+    #PC用商品説明文
+    productDescription_pc = models.TextField(blank=True)
+    #スマートフォン用商品説明文
+    productDescription_sp = models.TextField(blank=True)
+    #PC用販売説明文
+    salesDescription = models.TextField(blank=True)
+    #医薬品説明文
+    precautions_description = models.TextField(blank=True)
+    #医薬品注意事項	
+    precautions_agreement = models.TextField(blank=True)
+    #商品種別
+    itemType = models.CharField(blank=True)
+    #商品画像種別
+    images_type = models.CharField(blank=True)
+    #商品画像URL
+    images_location = models.URLField(blank=True)
+    #商品画像名（ALT）
+    images_alt = models.CharField(blank=True)
+    #白背景画像種別	
+    whiteBgImage_type = models.CharField(blank=True)
+    #白背景画像URL
+    whiteBgImage_location = models.URLField(blank=True)
+    #動画種別
+    video_type = models.CharField(blank=True)
+    #動画のURL
+    video_parameters_value = models.URLField(blank=True)
+    #ジャンルID
+    genreId = models.CharField()
+    #非製品属性タグID
+    tags = models.TextField()
     #倉庫指定
-    hide_item = models.BooleanField()
+    hideItem = models.BooleanField()
+
+
+    #消費税込み
+    payment_taxIncluded = models.BooleanField()
     #サーチ表示
-    tagline = models.BooleanField()
-    #消費税
-    tax = models.BooleanField()
+    features_searchVisibility = models.CharField()
     #注文ボタン表示
-    order_button = models.BooleanField()
-    #お問い合わせボタン表示
-    shop_contact_button = models.BooleanField()
+    features_displayNormalCartButton = models.BooleanField()
     #在庫表表示
-    inventory_display = models.IntegerField()
+    features_inventoryDisplay = models.CharField()
+    #お問い合わせボタン表示
+    features_shopContact = models.BooleanField()
+    #代引料
+    payment_cashOnDeliveryFeeIncluded = models.BooleanField()
+
+
+
+
+
 
     updated_at = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -33,10 +74,17 @@ class Item(models.Model):
 
 
 class Sku(models.Model):
-    sku_number = models.CharField(max_length=255)
-    standard_price = models.IntegerField(default=0)
-    reference_price = models.CharField(max_length=255)
+    #sku管理番号
+    skuNumber = models.CharField(max_length=255)
+    #販売価格
+    standardPrice = models.IntegerField()
+    #表示価格種別
+    referencePrice_displayType = models.CharField(max_length=255)
+    #表示価格
+    referencePrice_value = models.CharField()
+    #SKU倉庫設定
     hidden = models.IntegerField(default=0)
+    
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
