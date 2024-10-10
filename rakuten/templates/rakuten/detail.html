@@ -1,22 +1,111 @@
 <h1>
     {{item}}
 </h1>
-<table>
+
+<h2>商品情報</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th style="width:10%">項目</th>
+            <th>楽天の設定値</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>商品番号</td>
+            <td>{{ item.itemNumber }}</td>
+        </tr>
+        <tr>
+            <td>商品名</td>
+            <td>{{ item.title }}</td>
+        </tr>
+        <tr>
+            <td>キャッチコピー</td>
+            <td>{{ item.tagline }}</td>
+        </tr>
+        <tr>
+            
+            <td>PC用商品説明文</td>
+            <td>{{ item.productDescription_pc |safe }}</td>
+        </tr>
+        <tr>
+            <td>スマートフォン用商品説明文</td>
+            <td>{{ item.productDescription_sp |safe }}</td>
+        </tr>
+        <tr>
+            <td>PC用販売説明文</td>
+            <td>{{ item.salesDescription |safe }}</td>
+        </tr>
+        <tr>
+            <td>商品種別</td>
+            <td>{{ item.itemType }}</td>
+        </tr>
+        <tr>
+            <td>ジャンルID></td>
+            <td>{{ item.genreId }}</td>
+        </tr>
+        <tr>
+            <td>非製品属性タグID</td>
+            <td>{{ item.tags }}</td>
+        </tr>
+        <tr>
+            <td>倉庫指定</td>
+            <td>{{ item.hideItem }}</td>
+        </tr>
+        <tr>
+            <td>サーチ表示</td>
+            <td>{{ item.features_searchVisibility }}</td>
+        </tr>
+        <tr>
+            <td>注文ボタン表示</td>
+            <td>{{ item.features_displayNormalCartButton }}</td>
+        </tr>
+        <tr>
+            <td>在庫表表示</td>
+            <td>{{ item.features_inventoryDisplay }}</td>
+        </tr>
+        <tr>
+            <td>お問い合わせボタン表示</td>
+            <td>{{ item.features_shopContact }}</td>
+        </tr>
+        <tr>
+            <td>消費税込み</td>
+            <td>{{ item.payment_taxIncluded }}</td>
+        </tr>
+        <tr>
+            <td>代引料</td>
+            <td>{{ item.payment_cashOnDeliveryFeeIncluded }}</td>
+        </tr>
+
+    </tbody>
+</table>
+
+
+
+<h2>SKU情報</h2>
+
+<table style="width:100%" border="1">
     <thead>
         <tr>
             <th>sku管理番号</th>
-            <th>販売価格</th>
+            <th>表示価格種別</th>
             <th>表示価格</th>
-            <th>SKU倉庫指定</th>
+            <th>SKU倉庫設定</th>
+            <th>販売価格</th>
+            <th>カタログID</th>
+            <th>カタログIDなしの理由</th>
         </tr>
     </thead>
     <tbody>
         {% for sku in skus %}
             <tr>
-                <td>{{ sku.sku_number }}</td>
-                <td>{{ sku.reference_price }}</td>
-                <td>{{ sku.standard_price }}</td>
+                <td>{{ sku.skuNumber }}</td>
+                <td>{{ sku.referencePrice_displayType }}</td>
+                <td>{{ sku.referencePrice_value }}</td>
                 <td>{{ sku.hidden }}</td>
+                <td>{{ sku.standardPrice }}</td>
+                <td>{{ sku.articleNumber_value }}</td>
+                <td>{{ sku.articleNumber_exemptionReason }}</td>
             </tr>
         {% endfor %}
     </tbody>

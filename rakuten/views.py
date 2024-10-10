@@ -25,7 +25,7 @@ def index(request):
     count = Item.objects.count()
     template = loader.get_template("rakuten/index.html")
     
-    last_update = Item.objects.order_by("-updated_at").first().updated_at
+    last_update = Sku.objects.order_by("-updated_at").first().updated_at
 
 
     context = {
@@ -36,7 +36,7 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def detail(request, manage_number):
-    item = get_object_or_404(Item, manage_number= manage_number)
+    item = get_object_or_404(Item, manageNumber= manage_number)
     skus = get_list_or_404(Sku, item=item.id)
 
     context = {
@@ -46,7 +46,8 @@ def detail(request, manage_number):
     return render(request, "rakuten/detail.html", context)
 
 def update(request):
-    last_update = Item.objects.order_by("-updated_at").first().updated_at
-    test_date = datetime.strptime("2024-09-19T15:00:41+09:00", '%Y-%m-%dT%H:%M:%S%z')
-    recently_updated.delay(last_update)
+    #last_update = Item.objects.order_by("-updated_at").first().updated_at
+    #test_date = datetime.strptime("2024-09-19T15:00:41+09:00", '%Y-%m-%dT%H:%M:%S%z')
+    #recently_updated.delay(last_update)
+    recently_updated.delay()
     return redirect("rakuten:index")
