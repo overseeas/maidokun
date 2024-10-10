@@ -46,7 +46,8 @@ def detail(request, manage_number):
     return render(request, "rakuten/detail.html", context)
 
 def update(request):
-    last_update = Item.objects.order_by("-updated_at").first().updated_at
-    test_date = datetime.strptime("2024-09-19T15:00:41+09:00", '%Y-%m-%dT%H:%M:%S%z')
-    recently_updated.delay(last_update)
+    #last_update = Item.objects.order_by("-updated_at").first().updated_at
+    #test_date = datetime.strptime("2024-09-19T15:00:41+09:00", '%Y-%m-%dT%H:%M:%S%z')
+    #recently_updated.delay(last_update)
+    recently_updated.delay()
     return redirect("rakuten:index")

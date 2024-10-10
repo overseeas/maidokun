@@ -12,7 +12,9 @@ def recently_updated(last_update=False):
         #last_update = datetime.strptime("1999-01-01T01:00:00+09:00", '%Y-%m-%dT%H:%M:%S%z')
     print(last_update)
     items = get_updated_list(last_update)
+    print("retrieved datas from rms")
     for item in items:
+        print(item["manageNumber"])
         #商品
         if not(Item.objects.filter(manageNumber= item["manageNumber"]).exists()):
             Item.objects.create(manageNumber= item["manageNumber"], updated_at = item["updated"])
@@ -21,7 +23,7 @@ def recently_updated(last_update=False):
 
         if "itemNumber" in item: args_updated["itemNumber"] = item["itemNumber"]
         if "title" in item: args_updated["title"] = item["title"]
-        if "tagline" in item["tagline"]: args_updated["tagline"] = item["tagline"]
+        if "tagline" in item: args_updated["tagline"] = item["tagline"]
         if "productDescription" in item:
             if "pc" in item["productDescription"]: args_updated["productDescription_pc"] = item["productDescription"]["pc"]
             if "sp" in item["productDescription"]: args_updated["productDescription_sp"] = item["productDescription"]["sp"]
@@ -50,10 +52,10 @@ def recently_updated(last_update=False):
             sku_args_updated = dict()
             if "standardPrice" in detail: sku_args_updated["standardPrice"] = detail["standardPrice"]
             if "referencePrice" in detail:
-                if "displayType" in detail["referencePrice"]: sku_args_updated["referencePrice_value"] = detail["referencePrice"]["value"]
+                if "displayType" in detail["referencePrice"]: sku_args_updated["referencePrice_displayType"] = detail["referencePrice"]["displayType"]
                 if "value" in detail["referencePrice"]: sku_args_updated["referencePrice_value"] = detail["referencePrice"]["value"]
             if "hidden" in detail: sku_args_updated["hidden"] = detail["hidden"]
-            if "articleNumber":
+            if "articleNumber" in detail:
                 if "value" in detail["articleNumber"]: sku_args_updated["articleNumber_value"] = detail["articleNumber"]["value"]
                 if "exemptionReason" in detail["articleNumber"]: sku_args_updated["articleNumber_exemptionReason"] = detail["articleNumber"]["exemptionReason"]
 

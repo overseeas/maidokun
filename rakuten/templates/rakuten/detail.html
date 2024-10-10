@@ -24,16 +24,17 @@
             <td>{{ item.tagline }}</td>
         </tr>
         <tr>
+            
             <td>PC用商品説明文</td>
-            <td>{{ item.productDescription_pc }}</td>
+            <td>{{ item.productDescription_pc |safe }}</td>
         </tr>
         <tr>
             <td>スマートフォン用商品説明文</td>
-            <td>{{ item.productDescription_sp }}</td>
+            <td>{{ item.productDescription_sp |safe }}</td>
         </tr>
         <tr>
             <td>PC用販売説明文</td>
-            <td>{{ item.salesDescription }}</td>
+            <td>{{ item.salesDescription |safe }}</td>
         </tr>
         <tr>
             <td>商品種別</td>

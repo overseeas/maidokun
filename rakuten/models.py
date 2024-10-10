@@ -50,7 +50,7 @@ class Item(models.Model):
 
 class Sku(models.Model):
     #sku管理番号
-    skuNumber = models.CharField(max_length=255, null=True)
+    skuNumber = models.CharField(max_length=255, null=True, db_index=True)
     #表示価格種別
     referencePrice_displayType = models.CharField(max_length=255, null=True)
     #表示価格
