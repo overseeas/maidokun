@@ -1,12 +1,15 @@
 from .models import Item, Sku
+from django.http import HttpResponse
 
 from datetime import datetime
 from . import api
 from celery import shared_task
 
 
+
 @shared_task
 def recently_updated(last_update=False):
+    last_update_to_show = datetime.strftime(datetime.now(), '%Y-%m-%dT%H:%M:%S%z')
     if not(last_update):
         last_update = Item.objects.order_by("-updated_at").first().updated_at
         #last_update = datetime.strptime("1999-01-01T01:00:00+09:00", '%Y-%m-%dT%H:%M:%S%z')
@@ -49,7 +52,7 @@ def recently_updated(last_update=False):
             if not(Sku.objects.filter(skuNumber=sku).exists()):
                 Sku.objects.create(skuNumber=sku, item= Item.objects.get(manageNumber=item["manageNumber"]))
 
-            sku_args_updated = dict()
+            sku_args_updated = dict(updated_at = last_update_to_show)
             if "standardPrice" in detail: sku_args_updated["standardPrice"] = detail["standardPrice"]
             if "referencePrice" in detail:
                 if "displayType" in detail["referencePrice"]: sku_args_updated["referencePrice_displayType"] = detail["referencePrice"]["displayType"]
