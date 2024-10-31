@@ -11,11 +11,9 @@ Rakuten registerd : {{ count }}
 {% else %}
     <p>No item registered</p>
 {% endif %}
+<p>
+    最近の更新時間：{{ last_update }}
+</p>
 
-<form action="{% url 'rakuten:update' %}" method="post">
-    {% csrf_token %}
-    {{ last_update }} <br>
-    <input type="submit" value="Update">
-</form>
-
-<a href="{% url 'rakuten:export' %}">export csv</a>
+<a href="{% url 'rakuten:export' %}">楽天全データダウンロード</a></br>
+<a href="{% url 'rakuten:export' %}">normal-item.csvダウンロード</a>

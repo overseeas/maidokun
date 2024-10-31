@@ -1,20 +1,42 @@
-from django.http import StreamingHttpResponse
+from django.http import StreamingHttpResponse, HttpResponse
 from .models import Item, Sku
 
 import csv
 from itertools import chain
 
-class FieldName:
-    def __init__(self, names):
-        # Item field
-        # Sku field
-        if "SKU管理番号" in names: self.skuNumber = "SKU管理番号"
-        if "表示価格種別" in names: self.referencePrice_displayType = "表示価格種別"
-        if "表示価格" in names: self.referencePrice_value = "表示価格"
-        if "SKU倉庫設定" in names: self.hidden = "SKU倉庫設定"
-        if "販売価格" in names: self.standardPrice = "販売価格"
-        if "カタログID" in names: self.articleNumber_value = "カタログID"
-        if "カタログIDなしの理由" in names: self.articleNumber_exemptionReason = "カタログIDなしの理由"
+class ItemField():
+    def __init__(self):
+        self.manageNumber = "商品管理番号"
+        self.itemNumber = "商品番号"
+        self.title = "商品名"
+        self.tagline = "キャッチコピー"
+        self.productDescription_pc = "PC用商品説明文"
+        self.productDescription_sp = "スマートフォン用商品説明文"
+        self.salesDescription = "PC用販売説明文"
+        self.itemType = "商品種別"
+        self.genreId = "ジャンルID"
+        self.tags = "非製品属性タグID"
+        self.hideItem = "倉庫指定"
+        self.features_searchVisibility = "サーチ表示"
+        self.features_displayNormalCartButton = "注文ボタン表示"
+        self.features_inventoryDisplay = "在庫表表示"
+        self.features_shopContact = "お問い合わせボタン表示"
+        self.payment_taxIncluded = "消費税込み"
+        self.payment_cashOnDeliveryFeeIncluded = "代引料"
+
+class SkuField:
+    def __init__(self):
+        # item
+        self.item = ItemField()
+
+        # sku
+        self.skuNumber = "SKU管理番号"
+        self.referencePrice_displayType = "表示価格種別"
+        self.referencePrice_value = "表示価格"
+        self.hidden = "SKU倉庫設定"
+        self.standardPrice = "販売価格"
+        self.articleNumber_value = "カタログID"
+        self.articleNumber_exemptionReason = "カタログIDなしの理由"
 
 
 
@@ -29,24 +51,16 @@ class Echo:
 
 
 def all_data_for_vlookup(request):
+    rows = []
     # set field name
-    fields_name = FieldName()
-    fields_name.skuNumber = "SKU管理番号"
-    fields_name.referencePrice_displayType = "表示価格種別"
-    fields_name.referencePrice_value = "表示価格"
-    fields_name.hidden = "SKU倉庫設定"
-    fields_name.standardPrice = "販売価格"
-    fields_name.articleNumber_value = "カタログID"
-    fields_name.articleNumber_exemptionReason = "カタログIDなしの理由"
-
-
+    fields_name = SkuField()
     rows = Sku.objects.all()
+
     rows = list(chain([fields_name], rows))
-    print(rows[0])
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer)
     return StreamingHttpResponse(
-        (writer.writerow([row.skuNumber, row.referencePrice_value]) for row in rows),
-        content_type="text/csv; charset=shift-jis",
+        (writer.writerow([row.item.manageNumber, row.item.title, row.item.hideItem, row.skuNumber, row.referencePrice_value, row.standardPrice, row.hidden]) for row in rows),
+        content_type="text/csv; charset=utf_8_sig",
         headers={"Content-Disposition": 'attachment; filename="sku.csv"'},
     )
