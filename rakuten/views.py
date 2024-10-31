@@ -35,6 +35,8 @@ def index(request):
         "last_update": last_update,
         "count": count,
     }
+
+
     return HttpResponse(template.render(context, request))
 
 def detail(request, manage_number):
