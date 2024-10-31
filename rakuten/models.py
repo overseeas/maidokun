@@ -65,7 +65,7 @@ class Sku(models.Model):
     #カタログIDなしの理由
     articleNumber_exemptionReason = models.CharField(null=True)
 
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(null=True)
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     def __str__(self):

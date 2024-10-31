@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
-from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpRequest
+from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpRequest, StreamingHttpResponse
 from django.template import loader
 from django.db.models import F
 from django.urls import reverse
 from .tasks import recently_updated
+from .export import *
 
 from base64 import b64encode
 from .models import Item, Sku
@@ -12,6 +13,7 @@ import environ
 import os
 from pytz import timezone
 from datetime import datetime, timedelta
+import csv
 
 env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,6 +35,8 @@ def index(request):
         "last_update": last_update,
         "count": count,
     }
+
+
     return HttpResponse(template.render(context, request))
 
 def detail(request, manage_number):
@@ -46,8 +50,5 @@ def detail(request, manage_number):
     return render(request, "rakuten/detail.html", context)
 
 def update(request):
-    #last_update = Item.objects.order_by("-updated_at").first().updated_at
-    #test_date = datetime.strptime("2024-09-19T15:00:41+09:00", '%Y-%m-%dT%H:%M:%S%z')
-    #recently_updated.delay(last_update)
     recently_updated.delay()
     return redirect("rakuten:index")
