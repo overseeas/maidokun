@@ -5,6 +5,7 @@ from django.db.models import F
 from django.urls import reverse
 from .tasks import recently_updated
 from .export import *
+from .forms import NameForm
 
 from base64 import b64encode
 from .models import Item, Sku
@@ -23,7 +24,7 @@ env.read_env(os.path.join(BASE_DIR, 'maidokun/.env'))
 
 
 def index(request):
-    items = Item.objects.order_by("-updated_at").all()[:10]
+    items = Item.objects.all()[:10]
     count = Item.objects.count()
     template = loader.get_template("rakuten/index.html")
     
@@ -52,3 +53,21 @@ def detail(request, manage_number):
 def update(request):
     recently_updated.delay()
     return redirect("rakuten:index")
+
+def get_name(request):
+    # if this is a POST request we need to process the form data
+    if request.method == "POST":
+        # create a form instance and populate it with data from the request:
+        form = NameForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect("/thanks/")
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = NameForm()
+
+    return render(request, "name.html", {"form": form})
