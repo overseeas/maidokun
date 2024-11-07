@@ -5,27 +5,23 @@ Rakuten registerd : {{ count }}
 <form action="" method="get">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Search">
+    <input type="submit" value="Search"></br>
+    <a href="{% url 'rakuten:export' %}">楽天全データダウンロード</a></br>
+
+    <div>
+        {% if items %}
+        <ul>
+            {% for item in items %}
+                <li>
+                    <a href="/rakuten/{{ item.manageNumber }}/">{{ item.manageNumber }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    
 </form>
-
-
-<div>
-    {% if items %}
-    <ul>
-        {% for item in items %}
-            <li>
-                <a href="/rakuten/{{ item.manageNumber }}/">{{ item.manageNumber }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <p>Enter manage number</p>
-    {% endif %}
-</div>
-
 
 <p>
     最近の更新時間：{{ last_update }}
 </p>
-
-<a href="{% url 'rakuten:export' %}">楽天全データダウンロード</a></br>

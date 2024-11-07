@@ -64,18 +64,3 @@ def all_data_for_vlookup(request):
         content_type="text/csv; charset=utf_8_sig",
         headers={"Content-Disposition": 'attachment; filename="sku.csv"'},
     )
-
-def item_and_sku(request):
-    rows = []
-    # set field name
-    fields_name = SkuField()
-    rows = Sku.objects.all()[:10]
-
-    rows = list(chain([fields_name], rows))
-    pseudo_buffer = Echo()
-    writer = csv.writer(pseudo_buffer)
-    return StreamingHttpResponse(
-        (writer.writerow([row.item.manageNumber, row.item.title, row.item.hideItem, row.skuNumber, row.referencePrice_value, row.standardPrice, row.hidden]) for row in rows),
-        content_type="text/csv; charset=utf_8_sig",
-        headers={"Content-Disposition": 'attachment; filename="sku.csv"'},
-    )

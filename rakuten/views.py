@@ -76,13 +76,12 @@ def search(request):
                     "count": count,
                     "last_update": last_update,
                 }
-                return render(request, "rakuten/search.html", context)
-
-    form = SearchForm()
-    context = {
-        "form": form,
-        "count": count,
-        "last_update": last_update,
-    }
+    else:
+        form = SearchForm()
+        context = {
+            "form": form,
+            "count": count,
+            "last_update": last_update,
+        }
 
     return render(request, "rakuten/search.html", context)
