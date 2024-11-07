@@ -66,8 +66,6 @@ def search(request):
             # check whether it's valid:
             if form.is_valid():
                 manageNumber = form.cleaned_data["manageNumber"]
-                
-
 
                 items = get_list_or_404(Item, manageNumber__contains = manageNumber)
                 context = {
@@ -76,12 +74,12 @@ def search(request):
                     "count": count,
                     "last_update": last_update,
                 }
-    else:
-        form = SearchForm()
-        context = {
-            "form": form,
-            "count": count,
-            "last_update": last_update,
-        }
+                return render(request, "rakuten/search.html", context)
+    form = SearchForm()
+    context = {
+        "form": form,
+        "count": count,
+        "last_update": last_update,
+    }
 
     return render(request, "rakuten/search.html", context)

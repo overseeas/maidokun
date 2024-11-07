@@ -42,6 +42,7 @@ class Item(models.Model):
     #代引料
     payment_cashOnDeliveryFeeIncluded = models.BooleanField(null=True)
 
+
     updated_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
