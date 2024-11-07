@@ -5,7 +5,7 @@ from django.db.models import F
 from django.urls import reverse
 from .tasks import recently_updated
 from .export import *
-from .forms import NameForm
+from .forms import SearchForm
 
 from base64 import b64encode
 from .models import Item, Sku
@@ -23,7 +23,7 @@ env.read_env(os.path.join(BASE_DIR, 'maidokun/.env'))
 
 
 
-def index(request):
+"""def index(request):
     items = Item.objects.all()[:10]
     count = Item.objects.count()
     template = loader.get_template("rakuten/index.html")
@@ -38,7 +38,7 @@ def index(request):
     }
 
 
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(context, request))"""
 
 def detail(request, manage_number):
     item = get_object_or_404(Item, manageNumber= manage_number)
@@ -54,20 +54,35 @@ def update(request):
     recently_updated.delay()
     return redirect("rakuten:index")
 
-def get_name(request):
+def search(request):
+    count = Item.objects.count()
+    last_update = Sku.objects.order_by("-updated_at").first().updated_at
+
     # if this is a POST request we need to process the form data
-    if request.method == "POST":
+    if request.method == "GET":
         # create a form instance and populate it with data from the request:
-        form = NameForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect("/thanks/")
+        form = SearchForm(request.GET)
+        if form.is_bound:
+            # check whether it's valid:
+            if form.is_valid():
+                manageNumber = form.cleaned_data["manageNumber"]
+                
 
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = NameForm()
 
-    return render(request, "name.html", {"form": form})
+                items = get_list_or_404(Item, manageNumber__contains = manageNumber)
+                context = {
+                    "form": form,
+                    "items": items,
+                    "count": count,
+                    "last_update": last_update,
+                }
+                return render(request, "rakuten/search.html", context)
+
+    form = SearchForm()
+    context = {
+        "form": form,
+        "count": count,
+        "last_update": last_update,
+    }
+
+    return render(request, "rakuten/search.html", context)
