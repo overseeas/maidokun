@@ -85,7 +85,9 @@ def get_updated_list(limit_time):
     return updated_items
 
 def update_all():
-    items = get_updated_list(datetime.strptime("1999-01-01T01:00:00+09:00", '%Y-%m-%dT%H:%M:%S%z'))
+    #date = datetime.strptime("1999-01-01T01:00:00+09:00", '%Y-%m-%dT%H:%M:%S%z')
+    date = datetime.strptime("2024-11-21T15:00:00+09:00", '%Y-%m-%dT%H:%M:%S%z')
+    items = get_updated_list(date)
     print("retrieved datas from rms")
     for item in items:
         print(item["manageNumber"])
@@ -118,6 +120,8 @@ def update_all():
                 Sku.objects.create(skuNumber=sku, item= Item.objects.get(manageNumber=item["manageNumber"]))
 
             sku_args_updated = dict()
+
+            if "normalDeliveryDateId" in detail: sku_args_updated["normalDeliveryDateId"] = detail["normalDeliveryDateId"]
             if "standardPrice" in detail: sku_args_updated["standardPrice"] = detail["standardPrice"]
             if "referencePrice" in detail:
                 if "displayType" in detail["referencePrice"]:
@@ -126,11 +130,15 @@ def update_all():
                         sku_args_updated["referencePrice_value"] = "open"
                     elif detail["referencePrice"]["displayType"] == "SHOP_SETTING":
                         sku_args_updated["referencePrice_value"] = detail["referencePrice"]["value"]
-            if "hidden" in detail: sku_args_updated["hidden"] = detail["hidden"]
+            if "hidden" in detail: 
+                if detail["hidden"] == True:
+                    sku_args_updated["hidden"] = 1
+                else:
+                    sku_args_updated["hidden"] = 0
             if "shipping" in detail:
                 if "shippingMethodGroup" in detail["shipping"]: sku_args_updated["shipping_shippingMethodGroup"] = detail["shipping"]["shippingMethodGroup"]
                 if "postageIncluded" in detail["shipping"]: 
-                    if detail["shipping"]["shipping_postageIncluded"] == True:
+                    if detail["shipping"]["postageIncluded"] == True:
                         sku_args_updated["shipping_postageIncluded"] = "1"
                     else:
                         sku_args_updated["shipping_postageIncluded"] = "0"

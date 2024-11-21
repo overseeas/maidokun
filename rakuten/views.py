@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpRequest
 from django.template import loader
 from django.db.models import F
 from django.urls import reverse
-from .tasks import recently_updated
+from .tasks import update_all
 from .export import *
 from .forms import SearchForm
 
@@ -22,24 +22,6 @@ env.read_env(os.path.join(BASE_DIR, 'maidokun/.env'))
 
 
 
-
-"""def index(request):
-    items = Item.objects.all()[:10]
-    count = Item.objects.count()
-    template = loader.get_template("rakuten/index.html")
-    
-    last_update = Sku.objects.order_by("-updated_at").first().updated_at
-
-
-    context = {
-        "items": items,
-        "last_update": last_update,
-        "count": count,
-    }
-
-
-    return HttpResponse(template.render(context, request))"""
-
 def detail(request, manage_number):
     item = get_object_or_404(Item, manageNumber= manage_number)
     skus = get_list_or_404(Sku, item=item.id)
@@ -50,9 +32,10 @@ def detail(request, manage_number):
     }
     return render(request, "rakuten/detail.html", context)
 
+
 def update(request):
-    recently_updated.delay()
-    return redirect("rakuten:index")
+    update_all()
+    return redirect("rakuten:search")
 
 def search(request):
     count = Item.objects.count()
