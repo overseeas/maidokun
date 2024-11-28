@@ -23,6 +23,7 @@ class ItemField():
         self.features_shopContact = "お問い合わせボタン表示"
         self.payment_taxIncluded = "消費税込み"
         self.payment_cashOnDeliveryFeeIncluded = "代引料"
+        self.controlColumn = "コントロールカラム"
 
 class SkuField:
     def __init__(self):
@@ -37,6 +38,9 @@ class SkuField:
         self.standardPrice = "販売価格"
         self.articleNumber_value = "カタログID"
         self.articleNumber_exemptionReason = "カタログIDなしの理由"
+        self.shipping_postageIncluded = "送料"
+        self.normalDeliveryDateId = "在庫あり時納期管理番号"
+        self.shipping_shippingMethodGroup = "配送方法セット管理番号"
 
 
 
@@ -60,7 +64,19 @@ def all_data_for_vlookup(request):
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer)
     return StreamingHttpResponse(
-        (writer.writerow([row.item.manageNumber, row.item.title, row.item.hideItem, row.skuNumber, row.referencePrice_value, row.standardPrice, row.hidden]) for row in rows),
+        (writer.writerow([
+            row.item.controlColumn, 
+            row.item.manageNumber, 
+            row.item.title, 
+            row.standardPrice, 
+            row.referencePrice_value, 
+            row.shipping_postageIncluded, 
+            row.hidden, 
+            row.shipping_shippingMethodGroup,
+            row.skuNumber, 
+            row.item.hideItem,
+            row.normalDeliveryDateId,
+            ]) for row in rows),
         content_type="text/csv; charset=utf_8_sig",
         headers={"Content-Disposition": 'attachment; filename="sku.csv"'},
     )
