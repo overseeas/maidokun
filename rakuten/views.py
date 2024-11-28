@@ -34,7 +34,7 @@ def detail(request, manage_number):
 
 
 def update(request):
-    update_all()
+    update_all.delay()
     return redirect("rakuten:search")
 
 def search(request):

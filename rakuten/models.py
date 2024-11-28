@@ -99,6 +99,8 @@ class Item(models.Model):
     layout_largeDescriptionId = models.IntegerField(null=True)
     #目玉商品テンプレートID
     layout_showcaseId = models.IntegerField(null=True)
+    #コントロールカラム
+    controlColumn = models.CharField(null=True)
 
     review_count = models.IntegerField(null=True)
     review_avarageRating = models.FloatField(null=True)

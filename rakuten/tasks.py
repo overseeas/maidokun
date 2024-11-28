@@ -84,64 +84,68 @@ def get_updated_list(limit_time):
         next_cursorMark = response["nextCursorMark"]
     return updated_items
 
+@shared_task
 def update_all():
-    #date = datetime.strptime("1999-01-01T01:00:00+09:00", '%Y-%m-%dT%H:%M:%S%z')
-    date = datetime.strptime("2024-11-21T15:00:00+09:00", '%Y-%m-%dT%H:%M:%S%z')
+    date = datetime.strptime("1999-01-01T01:00:00+09:00", '%Y-%m-%dT%H:%M:%S%z')
+    #date = datetime.strptime("2024-11-21T15:00:00+09:00", '%Y-%m-%dT%H:%M:%S%z')
     items = get_updated_list(date)
     print("retrieved datas from rms")
+
     for item in items:
-        print(item["manageNumber"])
-        #商品
-        if not(Item.objects.filter(manageNumber= item["manageNumber"]).exists()):
-            Item.objects.create(manageNumber= item["manageNumber"], updated_at = item["updated"])
-        args_updated = dict(updated_at = item["updated"])
+        try:
+            #商品
+            if not(Item.objects.filter(manageNumber= item["manageNumber"]).exists()):
+                Item.objects.create(manageNumber= item["manageNumber"], updated_at = item["updated"])
+            args_updated = dict(updated_at = item["updated"])
 
-        if "title" in item: args_updated["title"] = item["title"]
-        if "hideItem" in item: 
-            if item["hideItem"] == True:
-                args_updated["hideItem"] = "1"
-            else:
-                args_updated["hideItem"] = "0"
-        if "features" in item:
-            if "searchVisibility" in item["features"]: args_updated["features_searchVisibility"] = item["features"]["searchVisibility"]
-            if "shopContact" in item["features"]: args_updated["features_shopContact"] = item["features"]["shopContact"]
-            if "displayNormalCartButton" in item["features"]: args_updated["features_displayNormalCartButton"] = item["features"]["displayNormalCartButton"]
-            if "inventoryDisplay" in item["features"]: args_updated["features_inventoryDisplay"] = item["features"]["inventoryDisplay"]
-        if "payment" in item:
-            if "taxIncluded" in item["payment"]: args_updated["payment_taxIncluded"] = item["payment"]["taxIncluded"]
-            if "cashOnDeliveryFeeIncluded" in item["payment"]: args_updated["payment_cashOnDeliveryFeeIncluded"] = item["payment"]["cashOnDeliveryFeeIncluded"]
-
-        Item.objects.filter(manageNumber= item["manageNumber"]).update(**args_updated)
-
-        skus = item["variants"]
-        #SKU
-        for sku, detail in skus.items():
-            if not(Sku.objects.filter(skuNumber=sku).exists()):
-                Sku.objects.create(skuNumber=sku, item= Item.objects.get(manageNumber=item["manageNumber"]))
-
-            sku_args_updated = dict()
-
-            if "normalDeliveryDateId" in detail: sku_args_updated["normalDeliveryDateId"] = detail["normalDeliveryDateId"]
-            if "standardPrice" in detail: sku_args_updated["standardPrice"] = detail["standardPrice"]
-            if "referencePrice" in detail:
-                if "displayType" in detail["referencePrice"]:
-                    sku_args_updated["referencePrice_displayType"] = detail["referencePrice"]["displayType"]
-                    if detail["referencePrice"]["displayType"] == "OPEN_PRICE":
-                        sku_args_updated["referencePrice_value"] = "open"
-                    elif detail["referencePrice"]["displayType"] == "SHOP_SETTING":
-                        sku_args_updated["referencePrice_value"] = detail["referencePrice"]["value"]
-            if "hidden" in detail: 
-                if detail["hidden"] == True:
-                    sku_args_updated["hidden"] = 1
+            if "title" in item: args_updated["title"] = item["title"]
+            if "hideItem" in item: 
+                if item["hideItem"] == True:
+                    args_updated["hideItem"] = "1"
                 else:
-                    sku_args_updated["hidden"] = 0
-            if "shipping" in detail:
-                if "shippingMethodGroup" in detail["shipping"]: sku_args_updated["shipping_shippingMethodGroup"] = detail["shipping"]["shippingMethodGroup"]
-                if "postageIncluded" in detail["shipping"]: 
-                    if detail["shipping"]["postageIncluded"] == True:
-                        sku_args_updated["shipping_postageIncluded"] = "1"
-                    else:
-                        sku_args_updated["shipping_postageIncluded"] = "0"
+                    args_updated["hideItem"] = "0"
+            if "features" in item:
+                if "searchVisibility" in item["features"]: args_updated["features_searchVisibility"] = item["features"]["searchVisibility"]
+                if "shopContact" in item["features"]: args_updated["features_shopContact"] = item["features"]["shopContact"]
+                if "displayNormalCartButton" in item["features"]: args_updated["features_displayNormalCartButton"] = item["features"]["displayNormalCartButton"]
+                if "inventoryDisplay" in item["features"]: args_updated["features_inventoryDisplay"] = item["features"]["inventoryDisplay"]
+            if "payment" in item:
+                if "taxIncluded" in item["payment"]: args_updated["payment_taxIncluded"] = item["payment"]["taxIncluded"]
+                if "cashOnDeliveryFeeIncluded" in item["payment"]: args_updated["payment_cashOnDeliveryFeeIncluded"] = item["payment"]["cashOnDeliveryFeeIncluded"]
 
-            Sku.objects.filter(skuNumber=sku).update(**sku_args_updated)
+            Item.objects.filter(manageNumber= item["manageNumber"]).update(**args_updated)
+
+            skus = item["variants"]
+            #SKU
+            for sku, detail in skus.items():
+                if not(Sku.objects.filter(skuNumber=sku).exists()):
+                    Sku.objects.create(skuNumber=sku, item= Item.objects.get(manageNumber=item["manageNumber"]))
+
+                sku_args_updated = dict()
+
+                if "normalDeliveryDateId" in detail: sku_args_updated["normalDeliveryDateId"] = detail["normalDeliveryDateId"]
+                if "standardPrice" in detail: sku_args_updated["standardPrice"] = detail["standardPrice"]
+                if "referencePrice" in detail:
+                    if "displayType" in detail["referencePrice"]:
+                        sku_args_updated["referencePrice_displayType"] = detail["referencePrice"]["displayType"]
+                        if detail["referencePrice"]["displayType"] == "OPEN_PRICE":
+                            sku_args_updated["referencePrice_value"] = "open"
+                        elif detail["referencePrice"]["displayType"] == "SHOP_SETTING":
+                            if "value" in detail["referencePrice"]:
+                                sku_args_updated["referencePrice_value"] = detail["referencePrice"]["value"]
+                if "hidden" in detail: 
+                    if detail["hidden"] == True:
+                        sku_args_updated["hidden"] = 1
+                    else:
+                        sku_args_updated["hidden"] = 0
+                if "shipping" in detail:
+                    if "shippingMethodGroup" in detail["shipping"]: sku_args_updated["shipping_shippingMethodGroup"] = detail["shipping"]["shippingMethodGroup"]
+                    if "postageIncluded" in detail["shipping"]: 
+                        if detail["shipping"]["postageIncluded"] == True:
+                            sku_args_updated["shipping_postageIncluded"] = "1"
+                        else:
+                            sku_args_updated["shipping_postageIncluded"] = "0"
+                Sku.objects.filter(skuNumber=sku).update(**sku_args_updated)
+        except:
+            print(item["manageNumber"])
     return True
