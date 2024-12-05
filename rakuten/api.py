@@ -21,9 +21,13 @@ def items_search(parameters: dict):
             uri = uri + key + "=" + value + "&"
 
     headers = add_auth_to_header(dict())
+
+    
     r = requests.get(uri, headers= headers)
     time.sleep(0.2)
     if r.status_code == 200:
         return r.json()
     else:
-        return False
+        time.sleep(1)
+        print("1 second delayed")
+        return items_search(parameters)

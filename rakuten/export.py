@@ -58,7 +58,7 @@ def all_data_for_vlookup(request):
     rows = []
     # set field name
     fields_name = SkuField()
-    rows = Sku.objects.all()
+    rows = Sku.objects.filter(is_deleted= False)
 
     rows = list(chain([fields_name], rows))
     pseudo_buffer = Echo()

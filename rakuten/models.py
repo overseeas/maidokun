@@ -105,6 +105,8 @@ class Item(models.Model):
     review_count = models.IntegerField(null=True)
     review_avarageRating = models.FloatField(null=True)
 
+    is_deleted = models.BooleanField(default=False)
+
     updated_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
@@ -163,7 +165,8 @@ class Sku(models.Model):
     #単品配送設定
     shipping_singleItemShipping = models.IntegerField(null=True)
 
-
+    is_deleted = models.BooleanField(default=False)
+    
     updated_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(null=True)
 

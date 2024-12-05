@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpRequest
 from django.template import loader
 from django.db.models import F
 from django.urls import reverse
-from .tasks import update_all
+from .tasks import update_all, retrieve_deleted_items
 from .export import *
 from .forms import SearchForm
 
@@ -34,12 +34,14 @@ def detail(request, manage_number):
 
 
 def update(request):
-    update_all.delay()
+    retrieve_deleted_items.delay()
+    #update_all.delay()
     return redirect("rakuten:search")
 
 def search(request):
-    count = Item.objects.count()
-    last_update = Sku.objects.order_by("-updated_at").first().updated_at
+    count = Item.objects.filter(is_deleted= True).count()
+    last_update = Sku.objects.order_by("updated_at").first().updated_at
+    print(last_update)
 
     # if this is a POST request we need to process the form data
     if request.method == "GET":
@@ -50,7 +52,7 @@ def search(request):
             if form.is_valid():
                 manageNumber = form.cleaned_data["manageNumber"]
 
-                items = get_list_or_404(Item, manageNumber__contains = manageNumber)
+                items = get_list_or_404(Item, manageNumber__contains = manageNumber, is_deleted= False)
                 context = {
                     "form": form,
                     "items": items,
