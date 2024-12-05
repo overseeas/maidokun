@@ -5,7 +5,7 @@ from django.db.models import F
 from django.urls import reverse
 from .tasks import update_all, retrieve_deleted_items
 from .export import *
-from .forms import SearchForm
+from .forms import SearchFormWithNumber, SearchFormWithTitle
 
 from base64 import b64encode
 from .models import Item, Sku
@@ -39,14 +39,14 @@ def update(request):
     return redirect("rakuten:search")
 
 def search(request):
-    count = Item.objects.filter(is_deleted= True).count()
-    last_update = Sku.objects.order_by("updated_at").first().updated_at
+    count = Item.objects.filter(is_deleted= False).count()
+    last_update = Sku.objects.order_by("-updated_at").first().updated_at
     print(last_update)
 
     # if this is a POST request we need to process the form data
     if request.method == "GET":
         # create a form instance and populate it with data from the request:
-        form = SearchForm(request.GET)
+        form = SearchFormWithNumber(request.GET)
         if form.is_bound:
             # check whether it's valid:
             if form.is_valid():
@@ -60,7 +60,7 @@ def search(request):
                     "last_update": last_update,
                 }
                 return render(request, "rakuten/search.html", context)
-    form = SearchForm()
+    form = SearchFormWithNumber()
     context = {
         "form": form,
         "count": count,
