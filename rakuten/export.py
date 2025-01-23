@@ -78,5 +78,5 @@ def all_data_for_vlookup(request):
             row.normalDeliveryDateId,
             ]) for row in rows),
         content_type="text/csv; charset=utf_8_sig",
-        headers={"Content-Disposition": 'attachment; filename="楽天まいど全データ.csv"'},
+        headers={"Content-Disposition": 'attachment; filename="data.csv"'},
     )
