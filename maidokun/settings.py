@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     "home.apps.HomeConfig",
     "rakuten.apps.RakutenConfig",
+    "item",
 
     "django_celery_beat",
     "django_celery_results",
