@@ -1,14 +1,28 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Item
-from .forms import ItemCodeForm
+from .forms import ItemForm
 
 def index(request):
 
     if request.method == "POST":
-        form = ItemCodeForm(request.POST)
+        form = ItemForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect("/thanks/")
+            item = Item.objects.filter(item_code=form.cleaned_data["item_code"])
+            context = {
+                    "item" : item
+                    }
+            return render(request, "item/index.html", {"form": form})
     else:
-        form = ItemCodeForm()
+        form = ItemForm()
     return render(request, "item/index.html", {"form": form})
+
+def create(request):
+    if request.method == "POST":
+        form = DefaultForm(request.POST)
+        if form.is_valid():
+            context = {}
+            return render(request, "item/index.html", {"form": form})
+    else:
+        form = DefaultForm()
+    return HttpResponseRedirect("item/index.html")

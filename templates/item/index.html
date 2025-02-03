@@ -9,7 +9,7 @@
 
     Item registered: {{ count }}
 
-    <form action="" method="post">
+    <form action="/item/index/" method="post">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Search"></br>
