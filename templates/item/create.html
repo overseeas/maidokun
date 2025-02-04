@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Create Item
+{% endblock %}
+
+
+{% block content %}
+
+    <form action="/item/create/" method="post">
+        {% csrf_token %}
+        {{ default_form }}
+        {{ rakuten_form }}
+        {{ yahoo_form }}
+        <input type="submit" value="Create"></br>
+
+        
+    </form>
+
+
+{% endblock %}
