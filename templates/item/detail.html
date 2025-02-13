@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+
+{% block title %}
+  Detail page
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>
+        {{item_code}}
+    </h1>
+
+    <h3>商品情報</h2>
+
+    <p>
+        モールの商品情報</br>
+	<a href="/rakuten/detail/{{ rakuten }}">楽天</a>
+    	<a href="">Yahoo</a>
+    	<a href="">おちゃのこ</a>
+    	<a href="">価格コム</a>
+    	<a href="">価格ロボット</a>
+    </p>
+
+{% endblock %}

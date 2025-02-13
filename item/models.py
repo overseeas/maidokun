@@ -4,6 +4,8 @@ from django.db import models
 class Margin(models.Model):
     group_name = models.CharField(unique=True, null=True)
     rate = models.DecimalField(decimal_places=2, max_digits=5, null=True)
+    def __str__(self):
+        return self.group_name
 
 class Item(models.Model):
     item_code = models.CharField(unique=True)
@@ -15,3 +17,5 @@ class Item(models.Model):
     #relationships
     margin_rate = models.ForeignKey(Margin, on_delete=models.CASCADE, null=True)
 
+    def __str__(self):
+        return self.item_code

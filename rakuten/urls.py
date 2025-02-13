@@ -8,6 +8,6 @@ urlpatterns = [
     path('search/', views.search, name="search"),
     path("update/", views.update, name="update"),
     path("export/", export.all_data_for_vlookup, name="export"),
-    path('<str:manage_number>/', views.detail, name="detail"),
+    path('detail/<str:manage_number>/', views.detail, name="detail"),
     path("", views.search, name="search"),
 ]

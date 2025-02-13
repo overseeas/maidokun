@@ -10,18 +10,3 @@ class DefaultForm(forms.Form):
     maker_price = forms.DecimalField(label="maker_price")
     maker_code = forms.CharField(label="maker_code")
     margin_rate = forms.ModelChoiceField(queryset=Margin.objects.all(), empty_label=None)
-
-class RakutenForm(forms.Form):
-    manageNumber = forms.CharField(label="manageNumber")
-
-class YahooForm(forms.Form):
-    pass
-
-class OchaForm(forms.Form):
-    pass
-
-class KakakuComForm(forms.Form):
-    pass
-
-class KakakuRobotForm(forms.Form):
-    pass

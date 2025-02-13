@@ -13,9 +13,11 @@
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Search"></br>
-
-        
     </form>
+
+    {% for item in items %}
+	<a href="/item/detail/{{ item.item_code }}">{{ item.item_code }}</a>
+    {% endfor %}
 
 
 {% endblock %}

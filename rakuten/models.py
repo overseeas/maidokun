@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+import item.models 
 
 import datetime
 
@@ -109,6 +110,8 @@ class Item(models.Model):
 
     updated_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    item = models.ForeignKey(item.models.Item, on_delete=models.CASCADE, null=True)
     def __str__(self):
         return self.manageNumber
 
