@@ -10,3 +10,7 @@ class SearchFormWithNumber(forms.Form):
 class SearchFormWithTitle(forms.Form):
     
     title = forms.CharField(label="商品名で検索")
+
+class Create(forms.Form):
+    manageNumber = forms.CharField(label="商品管理番号")
+    

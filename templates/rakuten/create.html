@@ -1,17 +1,15 @@
 {% extends "main.html" %}
 
 {% block title %}
-    Create Item
+    Create Rakuten Item
 {% endblock %}
 
 
 {% block content %}
 
-    <form action="/item/create/" method="post">
+    <form action="/rakuten/create/" method="post">
         {% csrf_token %}
-        {{ default_form.as_p }}
-        {{ rakuten_form }}
-        {{ yahoo_form }}
+        {{ form }}
         <input type="submit" value="Create"></br>
 
         

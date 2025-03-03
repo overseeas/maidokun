@@ -5,7 +5,7 @@ from django.db.models import F
 from django.urls import reverse
 from .tasks import update_all, retrieve_deleted_items
 from .export import *
-from .forms import SearchFormWithNumber, SearchFormWithTitle
+from .forms import SearchFormWithNumber, SearchFormWithTitle, Create
 
 from base64 import b64encode
 from .models import Item, Sku
@@ -36,9 +36,9 @@ def detail(request, manage_number):
 def update(request):
     retrieve_deleted_items.delay()
     #update_all.delay()
-    return redirect("rakuten:search")
+    return redirect("rakuten:index")
 
-def search(request):
+def index(request):
     count = Item.objects.filter(is_deleted= False).count()
     last_update = Sku.objects.order_by("-updated_at").first().updated_at
     print(last_update)
@@ -59,7 +59,7 @@ def search(request):
                     "count": count,
                     "last_update": last_update,
                 }
-                return render(request, "rakuten/search.html", context)
+                return render(request, "rakuten/index.html", context)
     form = SearchFormWithNumber()
     context = {
         "form": form,
@@ -67,4 +67,13 @@ def search(request):
         "last_update": last_update,
     }
 
-    return render(request, "rakuten/search.html", context)
+    return render(request, "rakuten/index.html", context)
+
+def create(request):
+    if request.method == "POST":
+        pass
+    form = Create()
+    context = {
+        "form": form
+    }
+    return render(request, "rakuten/create.html", context)

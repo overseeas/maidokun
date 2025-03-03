@@ -1,5 +1,4 @@
 from django import forms
-from .models import Margin
 
 class ItemForm(forms.Form):
     code = forms.CharField(label="自社コード", required=False)
