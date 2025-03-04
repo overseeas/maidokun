@@ -23,14 +23,14 @@ def index(request):
                             "form" : form,
                             "items" : items
                             }
-                    return render(request, "item/index.html", context=context)
+                    return render(request, "yahoo/index.html", context=context)
                 else:
                     messages.warning(request, "検索条件と十分に一致する結果が見つかりません")
         except:
-            return render(request, "item/index.html", {"form": form})
+            return render(request, "yahoo/index.html", {"form": form})
     else:
         form = ItemForm()
-    return render(request, "item/index.html", {"form": form})
+    return render(request, "yahoo/index.html", {"form": form})
 
 def create(request):
     if request.method == "POST":
@@ -56,9 +56,8 @@ def detail(request, code):
                 "code": get_object_or_404(Item, code=code),
             }
     try:
-        rakutenitem = get_object_or_404(rakuten.models.Item, manageNumber=code)
-        context["rakuten"] = rakutenitem
+        pass
     except:
         pass
 
-    return render(request, "item/detail.html", context=context)
+    return render(request, "yahoo/detail.html", context=context)

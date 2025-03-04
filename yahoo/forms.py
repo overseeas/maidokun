@@ -1,7 +1,7 @@
 from django import forms
 
 class ItemForm(forms.Form):
-    code = forms.CharField(label="自社コード", required=False)
+    code = forms.CharField(label="商品コード", required=False)
     name = forms.CharField(label="商品名", required=False)
 
     def clean(self):
@@ -14,14 +14,20 @@ class ItemForm(forms.Form):
         return cleaned_data
 
 class DefaultForm(forms.Form):
-    code = forms.CharField(label="自社コード")
+    path = forms.CharField(label="パス")
     name = forms.CharField(label="商品名")
-    product_code = forms.CharField(label="品番")
-    jan_code = forms.CharField(label="JANコード")
-    list_price = forms.DecimalField(label="定価")
-    sales_price = forms.DecimalField(label="実売価格")
-    stock_count = forms.DecimalField(label="在庫数")
-    bargain_price = forms.DecimalField(label="セール価格")
-    model_number = forms.CharField(label="発注型番")
-    is_alive = forms.BooleanField(label="廃番")
-    is_visible = forms.BooleanField(label="表示中")
+    code = forms.CharField(label="商品コード")
+    sub_code = forms.CharField(label="個別商品コード")
+    original_price = forms.DecimalField(label="メーカー希望小売価格")
+    price = forms.DecimalField(label="通常販売価格")
+    sale_price = forms.DecimalField(label="特価")
+    options = forms.CharField(label="オプション")
+    ship_weight = forms.DecimalField(label="重量")
+    display = forms.BooleanField(label="ページ公開")
+    delivery = forms.CharField(label="送料無料")
+    product_category = forms.CharField(label="プロダクトカテゴリ")
+    spec1 = forms.CharField(label="スペック1")
+    spec2 = forms.CharField(label="スペック2")
+    spec3 = forms.CharField(label="スペック3")
+    spec4 = forms.CharField(label="スペック4")
+    spec5 = forms.CharField(label="スペック5")
