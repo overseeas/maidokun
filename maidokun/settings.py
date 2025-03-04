@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "rakuten.apps.RakutenConfig",
     "item",
     "yahoo",
+    "kakakucom",
 
     "django_celery_beat",
     "django_celery_results",

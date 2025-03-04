@@ -1,0 +1,99 @@
+{% extends "main.html" %}
+
+{% block title %}
+  Detail page
+{% endblock %}
+
+
+{% block content %}
+
+    <h1>
+        {{code.code}}
+    </h1>
+
+    <h3>商品情報</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th style="width:10%">項目</th>
+                <th>現在の値</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>商品名</td>
+                <td> {{ code.name }} </td>
+            </tr>
+            <tr>
+                <td>品番</td>
+                <td> {{ code.product_code }} </td>
+            </tr>
+            <tr>
+                <td>JANコード</td>
+                <td> {{ code.jan_code }} </td>
+            </tr>
+            <tr>
+                <td>定価</td>
+                <td> {{ code.list_price }} </td>
+            </tr>
+            <tr>
+                <td>実売価格</td>
+                <td> {{ code.sales_price }} </td>
+            </tr>
+            <tr>
+                <td>在庫数</td>
+                <td> {{ code.stock_count }} </td>
+            </tr>
+            <tr>
+                <td>セール価格</td>
+                <td> {{ code.bargain_price }} </td>
+            </tr>
+            <tr>
+                <td>発注型番</td>
+                <td> {{ code.model_number }} </td>
+            </tr>
+            <tr>
+                <td>原価</td>
+                <td> {{ code.cost }} </td>
+            </tr>
+            <tr>
+                <td>送料グループ</td>
+                <td> {{ code.postage }} </td>
+            </tr>
+            <tr>
+                <td>発注グループ</td>
+                <td> {{ code.supplier }} </td>
+            </tr>
+            <tr>
+                <td>発注分類</td>
+                <td> {{ code.classification }} </td>
+            </tr>
+            <tr>
+                <td>メーカー</td>
+                <td> {{ code.maker }} </td>
+            </tr>
+            <tr>
+                <td>掛率表カテゴリ</td>
+                <td> {{ code.category }} </td>
+            </tr>
+            <tr>
+                <td>廃番</td>
+                <td> {{ code.is_deleted }} </td>
+            </tr>
+            <tr>
+                <td>表示</td>
+                <td> {{ code.is_visible }} </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        モールの商品情報</br>
+	<a href="/rakuten/detail/{{ rakuten }}">楽天</a>
+    	<a href="">Yahoo</a>
+    	<a href="">おちゃのこ</a>
+    	<a href="">価格コム</a>
+    	<a href="">価格ロボット</a>
+    </p>
+
+{% endblock %}

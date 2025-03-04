@@ -21,6 +21,7 @@ urlpatterns = [
     path('rakuten/', include('rakuten.urls', namespace="rakuten")),
     path('item/', include('item.urls', namespace="item")),
     path('yahoo/', include('yahoo.urls', namespace="yahoo")),
+    path('kakakucom/', include('kakakucom.urls', namespace="kakakucom")),
     path('admin/', admin.site.urls),
     path("", include('home.urls')),
 ]

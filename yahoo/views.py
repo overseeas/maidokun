@@ -39,16 +39,13 @@ def create(request):
         if default_form.is_valid():
             Item.objects.create(
                     code=default_form.cleaned_data["code"],
-                    maker_price=default_form.cleaned_data["maker_price"],
-                    maker_code=default_form.cleaned_data["maker_code"],
-                    margin_rate=default_form.cleaned_data["margin_rate"],
                     )
-            return redirect("/item/index")
+            return redirect("/yahoo/index")
     else:
         default_form = DefaultForm()
 
 
-    return render(request, "item/create.html", {
+    return render(request, "yahoo/create.html", {
         "default_form": default_form,
         })
 def detail(request, code):
