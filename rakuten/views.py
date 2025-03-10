@@ -8,7 +8,7 @@ from .export import *
 from .forms import SearchFormWithNumber, SearchFormWithTitle, Create
 
 from base64 import b64encode
-from .models import Item, Sku
+from .models import RakutenMaidoItem, RakutenMaidoSku
 from pathlib import Path
 import environ
 import os
@@ -23,8 +23,8 @@ env.read_env(os.path.join(BASE_DIR, 'maidokun/.env'))
 
 
 def detail(request, manage_number):
-    item = get_object_or_404(Item, manageNumber= manage_number)
-    skus = get_list_or_404(Sku, item=item.id)
+    item = get_object_or_404(RakutenMaidoItem, manageNumber= manage_number)
+    skus = get_list_or_404(RakutenMaidoSku, item=item.id)
 
     context = {
         "item": item,
@@ -39,8 +39,8 @@ def update(request):
     return redirect("rakuten:index")
 
 def index(request):
-    count = Item.objects.filter(is_deleted= False).count()
-    last_update = Sku.objects.order_by("-updated_at").first().updated_at
+    count = RakutenMaidoItem.objects.filter(is_deleted= False).count()
+    last_update = RakutenMaidoSku.objects.order_by("-updated_at").first().updated_at
     print(last_update)
 
     # if this is a POST request we need to process the form data
@@ -52,7 +52,7 @@ def index(request):
             if form.is_valid():
                 manageNumber = form.cleaned_data["manageNumber"]
 
-                items = get_list_or_404(Item, manageNumber__contains = manageNumber, is_deleted= False)
+                items = get_list_or_404(RakutenMaidoItem, manageNumber__contains = manageNumber, is_deleted= False)
                 context = {
                     "form": form,
                     "items": items,

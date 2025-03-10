@@ -9,6 +9,7 @@ env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 env.read_env(os.path.join(BASE_DIR, 'maidokun/.env'))
 
+headers = "test"
 def edit_item(parameters: dict):
     uri = "ttps://circus.shopping.yahooapis.jp/ShoppingWebService/V1/editItem"
     if parameters:

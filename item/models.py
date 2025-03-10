@@ -1,11 +1,26 @@
 from django.db import models
 
 # Create your models here.
-class Margin(models.Model):
-    group_name = models.CharField(unique=True)
-    rate = models.DecimalField(decimal_places=2, max_digits=5)
+class Postage(models.Model):
+    name = models.CharField(unique=True)
     def __str__(self):
-        return self.group_name
+        return self.name
+class Supplier(models.Model):
+    name = models.CharField(unique=True)
+    def __str__(self):
+        return self.name
+class Classification(models.Model):
+    name = models.CharField(unique=True)
+    def __str__(self):
+        return self.name
+class Maker(models.Model):
+    name = models.CharField(unique=True)
+    def __str__(self):
+        return self.name
+class Category(models.Model):
+    name = models.CharField(unique=True)
+    def __str__(self):
+        return self.name
 
 class Item(models.Model):
     # 自社コード
@@ -17,27 +32,27 @@ class Item(models.Model):
     # JANコード
     jan_code = models.CharField(blank=True)
     # 定価
-    list_price = models.DecimalField(decimal_places=0, max_digits=10, blank=True)
+    list_price = models.IntegerField(blank=True)
     # 実売価格
-    sales_price = models.DecimalField(decimal_places=0, max_digits=10)
+    sales_price = models.IntegerField()
     # 在庫数
-    stock_count = models.DecimalField(decimal_places=0, max_digits=10, blank=True)
+    stock_count = models.IntegerField(blank=True)
     # セール価格
-    bargain_price = models.DecimalField(decimal_places=0, max_digits=10, blank=True)
+    bargain_price = models.IntegerField(blank=True)
     # 発注型番
     model_number = models.CharField()
     # 原価
-    cost = models.DecimalField(decimal_places=0, max_digits=10)
+    cost = models.IntegerField()
     # 送料グループ
-    postage = models.CharField()
+    postage = models.ForeignKey(Postage, on_delete=models.CASCADE)
     # 発注グループ
-    supplier = models.CharField()
+    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     # 発注分類
-    classification = models.CharField()
+    classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
     # メーカー
-    maker = models.CharField()
+    maker = models.ForeignKey(Maker, on_delete=models.CASCADE)
     # 掛率表カテゴリ
-    category = models.CharField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     # 廃番削除
     is_deleted = models.BooleanField(default=False)
     # 非表示
