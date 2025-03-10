@@ -40,8 +40,8 @@ class Item(models.Model):
     # 廃番?
     is_deleted = models.BooleanField(default=False)
 
-    updated_at = models.DateTimeField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.code

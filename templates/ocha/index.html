@@ -1,0 +1,34 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Items
+{% endblock %}
+
+
+{% block content %}
+
+    <form action="/item/index/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Search"></br>
+
+        <div>
+            {% if items %}
+                <ul>
+                    {% for item in items %}
+                        <li>
+                            <a href="/item/detail/{{ item.code }}">{{ item.code }}</a></br>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </form>
+
+    {% for item in items %}
+	    <a href="/item/detail/{{ item.item_code }}">{{ item.item_code }}</a></br>
+    {% endfor %}
+
+    </br>
+
+{% endblock %}

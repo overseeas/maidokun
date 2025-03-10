@@ -43,7 +43,7 @@ class Item(models.Model):
     # 非表示
     is_visible = models.BooleanField(default=False)
 
-    updated_at = models.DateTimeField()
+    updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
