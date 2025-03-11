@@ -8,35 +8,35 @@ class YahooMaidoItem(models.Model):
     # 商品名
     name = models.CharField()
     # 商品コード
-    code = models.CharField()
+    # code = models.CharField(null=True)
     # 個別商品コード
-    sub_code = models.CharField(blank=True)
+    # sub_code = models.CharField(blank=True)
     # メーカー希望小売価格
-    original_price = models.IntegerField(blank=True)
+    # original_price = models.IntegerField(blank=True)
     # 通常販売価格
     price = models.IntegerField()
     # 特価
-    sale_price = models.IntegerField(blank=True)
+    # sale_price = models.IntegerField(blank=True)
     # オプション
-    options = models.TextField(blank=True)
+    # options = models.TextField(blank=True)
     # 重量
-    ship_weight = models.IntegerField(blank=True)
+    # ship_weight = models.IntegerField(blank=True)
     # ページ公開
-    display = models.BooleanField(default=False)
+    # display = models.BooleanField(default=False)
     # 送料無料
-    delivery = models.CharField(blank=True)
+    # delivery = models.CharField(blank=True)
     # プロダクトカテゴリ
     product_category = models.CharField()
     # スペック
-    spec1 = models.CharField(blank=True)
+    # spec1 = models.CharField(blank=True)
     # スペック
-    spec2 = models.CharField(blank=True)
+    # spec2 = models.CharField(blank=True)
     # スペック
-    spec3 = models.CharField(blank=True)
+    # spec3 = models.CharField(blank=True)
     # スペック
-    spec4 = models.CharField(blank=True)
+    # spec4 = models.CharField(blank=True)
     # スペック
-    spec5 = models.CharField(blank=True)
+    # spec5 = models.CharField(blank=True)
     
     # 廃番?
     is_deleted = models.BooleanField(default=False)
@@ -47,7 +47,7 @@ class YahooMaidoItem(models.Model):
     #関係
     item = models.ForeignKey(item.models.Item, on_delete=models.CASCADE)
     def __str__(self):
-        return self.code
+        return self.item.code
 
 class YahooCoordiroomItem(models.Model):
     # パス
@@ -55,35 +55,35 @@ class YahooCoordiroomItem(models.Model):
     # 商品名
     name = models.CharField()
     # 商品コード
-    code = models.CharField()
+    # code = models.CharField(null=True)
     # 個別商品コード
-    sub_code = models.CharField(blank=True)
+    # sub_code = models.CharField(blank=True)
     # メーカー希望小売価格
-    original_price = models.IntegerField(blank=True)
+    # original_price = models.IntegerField(blank=True)
     # 通常販売価格
     price = models.IntegerField()
     # 特価
-    sale_price = models.IntegerField(blank=True)
+    # sale_price = models.IntegerField(blank=True)
     # オプション
-    options = models.TextField(blank=True)
+    # options = models.TextField(blank=True)
     # 重量
-    ship_weight = models.IntegerField(blank=True)
+    # ship_weight = models.IntegerField(blank=True)
     # ページ公開
-    display = models.BooleanField(default=False)
+    # display = models.BooleanField(default=False)
     # 送料無料
-    delivery = models.CharField(blank=True)
+    # delivery = models.CharField(blank=True)
     # プロダクトカテゴリ
-    product_category = models.CharField()
+    product_category = models.CharField(blank=True)
     # スペック
-    spec1 = models.CharField(blank=True)
+    # spec1 = models.CharField(blank=True)
     # スペック
-    spec2 = models.CharField(blank=True)
+    # spec2 = models.CharField(blank=True)
     # スペック
-    spec3 = models.CharField(blank=True)
+    # spec3 = models.CharField(blank=True)
     # スペック
-    spec4 = models.CharField(blank=True)
+    # spec4 = models.CharField(blank=True)
     # スペック
-    spec5 = models.CharField(blank=True)
+    # spec5 = models.CharField(blank=True)
     
     # 廃番?
     is_deleted = models.BooleanField(default=False)
@@ -94,4 +94,4 @@ class YahooCoordiroomItem(models.Model):
     #関係
     item = models.ForeignKey(item.models.Item, on_delete=models.CASCADE)
     def __str__(self):
-        return self.code
+        return self.item.code

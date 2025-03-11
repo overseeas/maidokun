@@ -28,21 +28,21 @@ class Item(models.Model):
     # 商品名
     name = models.CharField()
     # 品番
-    product_code = models.CharField(blank=True)
+    # product_code = models.CharField(blank=True)
     # JANコード
-    jan_code = models.CharField(blank=True)
+    # jan_code = models.CharField(blank=True)
     # 定価
     list_price = models.IntegerField(blank=True)
     # 実売価格
     sales_price = models.IntegerField()
     # 在庫数
-    stock_count = models.IntegerField(blank=True)
+    # stock_count = models.IntegerField(blank=True)
     # セール価格
-    bargain_price = models.IntegerField(blank=True)
+    # bargain_price = models.IntegerField(blank=True)
     # 発注型番
     model_number = models.CharField()
     # 原価
-    cost = models.IntegerField()
+    cost = models.CharField()
     # 送料グループ
     postage = models.ForeignKey(Postage, on_delete=models.CASCADE)
     # 発注グループ

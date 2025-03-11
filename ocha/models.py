@@ -44,7 +44,7 @@ class OchaStore1Item(models.Model):
     item = models.ForeignKey(item.models.Item, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.c
+        return self.code
 
 class OchaStore2Item(models.Model):
     # 商品番号
@@ -78,4 +78,4 @@ class OchaStore2Item(models.Model):
     item = models.ForeignKey(item.models.Item, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.c
+        return self.code
