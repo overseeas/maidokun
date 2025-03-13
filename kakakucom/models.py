@@ -106,4 +106,4 @@ class KakakuStore2Item(models.Model):
     item = models.ForeignKey(item.models.Item, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.c
+        return self.item.code
