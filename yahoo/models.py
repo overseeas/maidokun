@@ -12,9 +12,9 @@ class YahooMaidoItem(models.Model):
     # 個別商品コード
     # sub_code = models.CharField(blank=True)
     # メーカー希望小売価格
-    # original_price = models.IntegerField(blank=True)
+    original_price = models.IntegerField(blank=True)
     # 通常販売価格
-    price = models.IntegerField()
+    price = models.IntegerField(blank=True, null=True)
     # 特価
     # sale_price = models.IntegerField(blank=True)
     # オプション
@@ -59,9 +59,9 @@ class YahooCoordiroomItem(models.Model):
     # 個別商品コード
     # sub_code = models.CharField(blank=True)
     # メーカー希望小売価格
-    # original_price = models.IntegerField(blank=True)
+    original_price = models.IntegerField(blank=True, null=True)
     # 通常販売価格
-    price = models.IntegerField()
+    price = models.IntegerField(blank=True, null=True)
     # 特価
     # sale_price = models.IntegerField(blank=True)
     # オプション

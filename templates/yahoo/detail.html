@@ -8,7 +8,7 @@
 {% block content %}
 
     <h1>
-        {{code.code}}
+        {{item.code}}
     </h1>
 
     <h3>商品情報</h2>
@@ -22,78 +22,29 @@
         </thead>
         <tbody>
             <tr>
+                <td>パス</td>
+                <td> {{ yahoo.path }} </td>
+            </tr>
+            <tr>
                 <td>商品名</td>
-                <td> {{ code.name }} </td>
+                <td> {{ yahoo.name }} </td>
             </tr>
             <tr>
-                <td>品番</td>
-                <td> {{ code.product_code }} </td>
+                <td>メーカー希望小売価格</td>
+                <td> {{ yahoo.original_price }} </td>
             </tr>
             <tr>
-                <td>JANコード</td>
-                <td> {{ code.jan_code }} </td>
+                <td>通常販売価格</td>
+                <td> {{ yahoo.price }} </td>
             </tr>
             <tr>
-                <td>定価</td>
-                <td> {{ code.list_price }} </td>
-            </tr>
-            <tr>
-                <td>実売価格</td>
-                <td> {{ code.sales_price }} </td>
-            </tr>
-            <tr>
-                <td>在庫数</td>
-                <td> {{ code.stock_count }} </td>
-            </tr>
-            <tr>
-                <td>セール価格</td>
-                <td> {{ code.bargain_price }} </td>
-            </tr>
-            <tr>
-                <td>発注型番</td>
-                <td> {{ code.model_number }} </td>
-            </tr>
-            <tr>
-                <td>原価</td>
-                <td> {{ code.cost }} </td>
-            </tr>
-            <tr>
-                <td>送料グループ</td>
-                <td> {{ code.postage }} </td>
-            </tr>
-            <tr>
-                <td>発注グループ</td>
-                <td> {{ code.supplier }} </td>
-            </tr>
-            <tr>
-                <td>発注分類</td>
-                <td> {{ code.classification }} </td>
-            </tr>
-            <tr>
-                <td>メーカー</td>
-                <td> {{ code.maker }} </td>
-            </tr>
-            <tr>
-                <td>掛率表カテゴリ</td>
-                <td> {{ code.category }} </td>
-            </tr>
-            <tr>
-                <td>廃番</td>
-                <td> {{ code.is_deleted }} </td>
-            </tr>
-            <tr>
-                <td>表示</td>
-                <td> {{ code.is_visible }} </td>
+                <td>プロダクトカテゴリ</td>
+                <td> {{ yahoo.product_category }} </td>
             </tr>
         </tbody>
     </table>
     <p>
-        モールの商品情報</br>
-	<a href="/rakuten/detail/{{ rakuten }}">楽天</a>
-    	<a href="">Yahoo</a>
-    	<a href="">おちゃのこ</a>
-    	<a href="">価格コム</a>
-    	<a href="">価格ロボット</a>
+        <a href="{{ search_url }}">yahooで検索</a>
     </p>
 
 {% endblock %}
