@@ -1,5 +1,5 @@
 from django.http import StreamingHttpResponse, HttpResponse
-from .models import RakutenMaidoItem, RakutenMaidoSku
+from .models import Item, Sku
 
 import csv
 from itertools import chain
@@ -58,7 +58,7 @@ def all_data_for_vlookup(request):
     rows = []
     # set field name
     fields_name = SkuField()
-    rows = RakutenMaidoSku.objects.filter(is_deleted= False)
+    rows = Sku.objects.filter(is_deleted= False)
 
     rows = list(chain([fields_name], rows))
     pseudo_buffer = Echo()
