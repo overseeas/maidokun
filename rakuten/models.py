@@ -22,7 +22,7 @@ class Item(models.Model):
     #医薬品説明文・注意事項
     #precautions = models.JSONField(default = dict(description= "医薬品説明文", agreement= "医療品注意事項"))
     #商品種別
-    itemType = models.CharField(choices=[("NORMAL", "通常商品"), ("PRE_ORDER", "予約商品"), ("SUBSCRIPTION", "定期購入商品")])
+    # itemType = models.CharField(choices=[("NORMAL", "通常商品"), ("PRE_ORDER", "予約商品"), ("SUBSCRIPTION", "定期購入商品")])
     #商品画像
     #images = models.JSONField(default=dict(images=[dict(type="商品画像種別",location="商品画像種別",alt="商品画像名（ALT）")]))
     #白背景画像
@@ -30,13 +30,13 @@ class Item(models.Model):
     #動画
     #video = models.JSONField(default=dict(type= "動画種別", parameters= dict(value= "動画のURL")))
     #ジャンルID
-    genreId = models.CharField()
+    # genreId = models.CharField()
     #非製品属性タグID
     #tags = models.JSONField(default=dict(tags= []))
     #倉庫指定
-    hideItem = models.BooleanField()
+    # hideItem = models.BooleanField(default=True)
     #在庫設定なし
-    unlimitedInventoryFlag = models.BooleanField()
+    # unlimitedInventoryFlag = models.BooleanField()
     #商品オプション（項目選択肢）
     #customizationOptions = models.JSONField(default=dict(customizationOptions= [dict(displayName= "商品オプション（項目選択肢）項目名", inputType= "商品オプション選択肢タイプ", required= "商品オプション必須フラグ", selections= [dict(displayValue= "商品オプション選択肢名")])]))
     #予約商品発売日
@@ -46,25 +46,25 @@ class Item(models.Model):
     #定期購入商品設定
     #subscription = models.JSONField(default=dict(shippingDateFlag= "お届け日付指定フラグ", shippingIntervalFlag= "お届け間隔指定フラグ"))
     #その他設定
-    features = models.JSONField(default=dict(searchVisiblity= "サーチ表示", displayNormalCartButton= "注文ボタン", displaySubscriptionCartButton="定期購入ボタン", inventoryDisplay="在庫数表示", lowStockThreshold="残り在庫数表示閾値", shopContact="商品問い合わせボタン", review="レビュー本文表示", displayManufacturerContents="メーカー提供情報表示"))
+    # features = models.JSONField(default=dict(searchVisiblity= "サーチ表示", displayNormalCartButton= "注文ボタン", displaySubscriptionCartButton="定期購入ボタン", inventoryDisplay="在庫数表示", lowStockThreshold="残り在庫数表示閾値", shopContact="商品問い合わせボタン", review="レビュー本文表示", displayManufacturerContents="メーカー提供情報表示"))
     #アクセスコントロール
     #accessControl = models.JSONField(default=dict(taxIncluded="消費税込み", taxRate="消費税税率", cashOnDeliveryFeeIncluded="代引料"))
     #決済情報
-    payment = models.JSONField(default=dict(taxIncluded= "消費税込み", taxRate="消費税税率", cashOnDeliveryFeeIncluded= "代引料"))
+    # payment = models.JSONField(default=dict(taxIncluded= "消費税込み", taxRate="消費税税率", cashOnDeliveryFeeIncluded= "代引料"))
     #ポイント変倍情報
     #pointCampaign = models.JSONField(default=dict(applicablePeriod=dict(start= "開始日時", end= "終了日時"), benefits=dict(pointRate= "ポイント変倍率"), optimization=dict(maxPointRate= "ポイント上限倍率")))
     #店舗内カテゴリでの表示順位
-    itemDisplaySequence = models.IntegerField()
+    # itemDisplaySequence = models.IntegerField()
     #レイアウト設定
-    layout = models.JSONField(default=dict(itemLayoutId= "商品ページレイアウト", navigationId="ヘッダー・フッター・レフトナビのテンプレートID", layoutSequenceId="表示項目の並び順テンプレートID", smallDescriptionId="共通説明文(小)テンプレートID", largeDescriptionId="共通説明文(大)テンプレートID", showcaseId="目玉商品テンプレートID"))
+    # layout = models.JSONField(default=dict(itemLayoutId= "商品ページレイアウト", navigationId="ヘッダー・フッター・レフトナビのテンプレートID", layoutSequenceId="表示項目の並び順テンプレートID", smallDescriptionId="共通説明文(小)テンプレートID", largeDescriptionId="共通説明文(大)テンプレートID", showcaseId="目玉商品テンプレートID"))
     #バリエーション項目
     #variantSelectors = models.JSONField(default=dict(key="バリエーション項目キー", displayName="バリエーション項目名", values=[dict(displayValue= "バリエーション選択肢")]))
     #登録日時
-    created = models.DateField()
+    # created = models.DateField()
     #更新日時
-    updated = models.DateField()
+    # updated = models.DateField()
     #廃番？
-    is_deleted = models.BooleanField(default=False)
+    # is_deleted = models.BooleanField(default=False)
 
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -113,7 +113,7 @@ class Sku(models.Model):
     #属性情報
     #attributes = models.JSONField(default=dict(attributes=[dict(name="属性情報名", values="属性情報（実値）", unit= "単位")]))
     #廃番？
-    is_deleted = models.BooleanField(default=False)
+    # is_deleted = models.BooleanField(default=False)
     
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -126,6 +126,7 @@ class Sku(models.Model):
 class Record(models.Model):
     shop_name = models.CharField()
     price = models.IntegerField()
+    our_price = models.IntegerField()
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     pass
 """

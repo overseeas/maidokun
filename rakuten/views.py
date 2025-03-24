@@ -40,8 +40,7 @@ def update(request):
 
 def index(request):
     count = Item.objects.filter(is_deleted= False).count()
-    last_update = Sku.objects.order_by("-updated_at").first().updated_at
-    print(last_update)
+    # last_update = Sku.objects.order_by("-updated_at").first().updated_at
 
     # if this is a POST request we need to process the form data
     if request.method == "GET":
@@ -57,14 +56,12 @@ def index(request):
                     "form": form,
                     "items": items,
                     "count": count,
-                    "last_update": last_update,
                 }
                 return render(request, "rakuten/index.html", context)
     form = SearchFormWithNumber()
     context = {
         "form": form,
         "count": count,
-        "last_update": last_update,
     }
 
     return render(request, "rakuten/index.html", context)
